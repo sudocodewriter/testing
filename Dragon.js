@@ -1,91 +1,117 @@
-'use strict';
-
-const time = document.getElementById('time');
-const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
-class Complex {
-  constructor(real, imag){
-    this.real = real;
-    this.imag = imag;
-  }
-
-  add(cplx) {
-    this.real += cplx.real;
-    this.imag += cplx.imag;
-    return this;
-    //return new Complex(this.real + cplx.real, this.imag + cplx.imag);
-  }
-
-  mag(cplx) {
-    //return Math.hypot(this.real,this.imag);
-    return Math.sqrt(this.real * this.real + this.imag * this.imag)
-  }
-
-  mul(cplx) {
-    // (a + ib)*(c + id) = (ac - bd) + i(bc + ad)
-    const real_part = this.real*cplx.real - this.imag*cplx.imag;
-    const imag_part = this.imag*cplx.real + this.real*cplx.imag;
-    this.real = real_part;
-    this.imag = imag_part;
-    return this;
-  }
+var direction = 0;
+function Dragon_Curve_Sequence(str) 
+{
+    length = str.length
+    string ='';
+    for(var i = 0; i<length;i++)
+    {
+        if(str[i]=='L')
+        {
+            string = string + 'LR';
+        }
+        else{
+            string = string + 'RL';
+        }
+    }
+    return string;
 }
 
-//Find out whether cplx is in mandelbrot set
-// Number of times mandelbrot will iterate
-const ITER_CONST = 1000; 
 
-function mandelbrot(cplx) {
-  let z = new Complex(0,0);
-  
-  let count = 0;
-  while (z.mag() <= 2 && count < ITER_CONST) {
-    z = (z.mul(z)).add(cplx);
-    count++;
-  }
-  
-  return count;
+function Dragon_curve_n(str, n_iter)
+{
+var str = "LR"
+for(var  i = 0; i<n_iter;i++)
+{
+    str = Dragon_Curve_Sequence(str);
+}
 }
 
-function returnImageData(x_start, y_start, canvas_width, canvas_height, window) {
+function draw() {
+    const canvas = document.querySelector('#canvas');
 
-  const start = performance.now();
+    if (!canvas.getContext) {
+        return;
+    }
+    const ctx = canvas.getContext('2d');
 
-  const step_X = window/canvas_width;
-  const step_Y = window/canvas_height;
+    // set line stroke and line width
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo()
+drawLLLL()
+drawRRRR()
+}
+drawLLLL()
+{
+    drawL()
+    drawL()
+    drawL()
+    drawL()
+}
+drawRRRR()
+{
+    drawR()
+    drawR()
+    drawR()
+    drawR()
+}
+drawL()
+{
 
-  const points_array = new Array(canvas_height*canvas_width*4).fill(0);
+}
+drawR()
+{
 
-
-let count = 0;
-// this is atrocious
-// this part hasn't been optimized but eh
-for (let y = y_start, count_y = 0; count_y < canvas_width; y += step_Y, count_y++){
-  for (let x = START_X_TOTAL, count_x = 0; count_x < canvas_height; x += step_X, count_x++){
-      let num = mandelbrot(new Complex(x,y));
-      let pixel_num = count*4;
-      points_array[pixel_num] = num;
-      points_array[pixel_num+1] = num;
-      points_array[pixel_num+2] = num;
-      points_array[pixel_num + 3] = 255;
-      count++;
-  }
 }
 
-const end = performance.now();
-time.textContent = end-start;
+class Pen {
+    vec2 cur_point
+    const vec2 ORIENT = N|E|S|W
+    cur_orient = 0|1|2|3
+    (0,1),(1,0),(0,-1),(-1,0)
 
-// creates new imageData object and puts it on the canvas
+    draw() {
+
+        canvas.lineTo(cur_point, cur_point + ORIENT * LENGTH)
+
+    }
+
+    Line cur_line;
+    drawR(){
+        cur_orient = (cur_orient++)%4;
+        cur_line such that c
+    }
+    Pen(x,y) {
+        this.loc_x = x
+        this.loc_y = y;
+    }
+
+    drawR()
 
 
+    
+}
+/*
 
-const CANVAS_WIDTH = canvas.width;
-const CANVAS_HEIGHT = canvas.height;
-const START_X_TOTAL = 0.300283;
-const START_Y_TOTAL =  -0.48857;
-const WINDOW = 0.01;
+    // draw a red line
+    ctx.beginPath();
+    ctx.moveTo(00, 000);
+    ctx.lineTo(300, 000);
+    ctx.stroke();
+    */
 
-let mandelbrot_img_data = returnImageData(START_X_TOTAL, START_Y_TOTAL, CANVAS_WIDTH, CANVAS_HEIGHT, WINDOW);
+// write a function to draw a horizontal line on the canvas of length say n pixels where n is 100
 
-ctx.putImageData(mandelbrot_img_data, 0, 0);
+// LLLL and RRRR both draw squares
+// write a drawR and drawL function that should both take a current 'point' setup
+// drawR after drawL should draw a line taking a right from the end of drawL
+// pen {}
+
+/*while(iter(outstring)) {
+    //char i
+    if i=='L' then do canvAsfdsfsd.line
+    if i =='R'
+}
+*/
